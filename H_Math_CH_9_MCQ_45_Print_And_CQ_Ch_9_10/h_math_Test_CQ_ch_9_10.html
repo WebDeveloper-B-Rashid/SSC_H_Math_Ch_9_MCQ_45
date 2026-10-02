@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S S C Preparation Test 2027 - Higher Mathematics</title>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  body {
+    font-family: 'Kalpurush', 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.5;
+    background: #f9f9f9;
+  }
+  .page-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  .controls {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #eef2f5;
+    border-radius: 8px;
+  }
+  button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #0056b3;
+    color: white;
+    transition: 0.3s;
+  }
+  button:hover { background-color: #004494; }
+  .exam-header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+  }
+  .exam-header h2 { margin: 5px 0; }
+  .meta-info {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .question-container {
+    margin-bottom: 25px;
+  }
+  .stem { margin-bottom: 10px; }
+  .sub-questions {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .sub-questions td {
+    padding: 5px 0;
+    vertical-align: top;
+  }
+  .q-num { width: 30px; }
+  .q-text { width: auto; }
+  .q-marks { width: 30px; text-align: right; font-weight: bold; }
+  
+  .lang-en, .exam-paper { display: none; }
+
+  @media print {
+    body { background: #fff; }
+    .page-container {
+      box-shadow: none;
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+    }
+    .controls { display: none; }
+    .exam-paper { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-container">
+  <!-- Interactive Controls (Hidden during print) -->
+  <div class="controls">
+    <button onclick="setLanguage('bn')">Bangla Version</button>
+    <button onclick="setLanguage('en')">English Version</button>
+    <button onclick="startExam()">Exam Start</button>
+    <button onclick="window.print()">Print</button>
+  </div>
+
+  <!-- Exam Content (Hidden until Exam Start is clicked) -->
+  <div class="exam-paper" id="exam-paper">
+    
+    <!-- Bangla Version -->
+    <div class="lang-bn" id="lang-bn">
+      <div class="exam-header">
+        <h2>S S C Preparation Test 2027</h2>
+        <h3>বিষয়: উচ্চতর গণিত</h3>
+        <p>অধ্যায় ৯ ও ১০</p>
+        <div class="meta-info">
+          <span>সময়: ৪০ মিনিট</span>
+          <span>পূর্ণমান: ২০</span>
+        </div>
+        <p style="margin-top: 10px;"><em>[যেকোনো ২টি প্রশ্নের উত্তর দাও]</em></p>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>১.</strong> $A = 2\log_k x - \log_k (3 + x)$ এবং $B = \frac{u-1}{\log_p (qr)} = \frac{v-1}{\log_q (rp)} = \frac{w-1}{\log_r (pq)}$
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">ক.</td><td class="q-text">$F(x) = \log\left(\frac{8}{x+5}\right)$ হলে, $F$ এর ডোমেন নির্ণয় কর।</td><td class="q-marks">২</td></tr>
+          <tr><td class="q-num">খ.</td><td class="q-text">$A = 0$ হলে দেখাও যে, $x = \frac{1}{2}(1 + \sqrt{13})$</td><td class="q-marks">৪</td></tr>
+          <tr><td class="q-num">গ.</td><td class="q-text">$B = 1$ হলে প্রমাণ কর যে, $uv + vw + uw - uvw = 0$</td><td class="q-marks">৪</td></tr>
+        </table>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>২.</strong> $\frac{\log_k x}{p^2+pq+q^2} = \frac{\log_k y}{q^2+qr+r^2} = \frac{\log_k z}{r^2+rp+p^2}$ এবং $Q = m^{4b}.n^{8+2b} - m^{7b}.n^{5-b}$
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">ক.</td><td class="q-text">$\log_{10}(a^2 - 11a + 40) = 1$ হলে, $a$ এর মান নির্ণয় কর।</td><td class="q-marks">২</td></tr>
+          <tr><td class="q-num">খ.</td><td class="q-text">দেখাও যে, $x^{p-q}.y^{q-r}.z^{r-p} = 1$.</td><td class="q-marks">৪</td></tr>
+          <tr><td class="q-num">গ.</td><td class="q-text">$Q = 0$ হলে, প্রমাণ কর যে, $b\log_k\left(\frac{m}{n}\right) = \log_k n$</td><td class="q-marks">৪</td></tr>
+        </table>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>৩.</strong> $A = \left(y - \frac{x}{2}\right)^6$ এবং $B = r - 96x + sx^2 + \dots$
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">ক.</td><td class="q-text">প্রমাণ কর যে, $0! = 1$</td><td class="q-marks">২</td></tr>
+          <tr><td class="q-num">খ.</td><td class="q-text">যদি $A = B$ হয়, তবে $y, s$ ও $r$ এর মান নির্ণয় কর।</td><td class="q-marks">৪</td></tr>
+          <tr><td class="q-num">গ.</td><td class="q-text">$A$ রাশিতে $y = 2$ হলে $x$ এর ঘাতের ঊর্ধ্বক্রমানুসারে $x^3$ পর্যন্ত বিস্তৃত কর এবং উহার সাহায্যে $(1.05)^6$ এর আসন্ন মান চার দশমিক স্থান পর্যন্ত নির্ণয় কর।</td><td class="q-marks">৪</td></tr>
+        </table>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>৪.</strong> $\left(2x^2 - \frac{1}{2x^3}\right)^{10}$ এবং $\left(x^2 + \frac{y}{x}\right)^6$ দুইটি দ্বিপদী রাশি।
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">ক.</td><td class="q-text">প্রথম দ্বিপদীটির মধ্যপদ নির্ণয় কর।</td><td class="q-marks">২</td></tr>
+          <tr><td class="q-num">খ.</td><td class="q-text">প্রথম দ্বিপদীর বিস্তৃতিতে $x$-বর্জিত পদ এবং তার মান নির্ণয় কর।</td><td class="q-marks">৪</td></tr>
+          <tr><td class="q-num">গ.</td><td class="q-text">দ্বিতীয় দ্বিপদী রাশিটির বিস্তৃতিতে $x^3$-এর সহগ 540 হলে $y$-এর মান নির্ণয় কর।</td><td class="q-marks">৪</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- English Version -->
+    <div class="lang-en" id="lang-en">
+      <div class="exam-header">
+        <h2>S S C Preparation Test 2027</h2>
+        <h3>Subject: Higher Mathematics</h3>
+        <p>Chapter 9 & 10</p>
+        <div class="meta-info">
+          <span>Time: 40 Minutes</span>
+          <span>Full Marks: 20</span>
+        </div>
+        <p style="margin-top: 10px;"><em>[Answer any 2 questions]</em></p>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>1.</strong> $A = 2\log_k x - \log_k (3 + x)$ and $B = \frac{u-1}{\log_p (qr)} = \frac{v-1}{\log_q (rp)} = \frac{w-1}{\log_r (pq)}$[cite: 1]
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">a.</td><td class="q-text">If $F(x) = \log\left(\frac{8}{x+5}\right)$, determine the domain of $F$.[cite: 1]</td><td class="q-marks">2</td></tr>
+          <tr><td class="q-num">b.</td><td class="q-text">If $A = 0$, show that $x = \frac{1}{2}(1 + \sqrt{13})$[cite: 1]</td><td class="q-marks">4</td></tr>
+          <tr><td class="q-num">c.</td><td class="q-text">If $B = 1$, prove that $uv + vw + uw - uvw = 0$[cite: 1]</td><td class="q-marks">4</td></tr>
+        </table>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>2.</strong> $\frac{\log_k x}{p^2+pq+q^2} = \frac{\log_k y}{q^2+qr+r^2} = \frac{\log_k z}{r^2+rp+p^2}$ and $Q = m^{4b}.n^{8+2b} - m^{7b}.n^{5-b}$[cite: 2]
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">a.</td><td class="q-text">If $\log_{10}(a^2 - 11a + 40) = 1$, find the value of $a$.[cite: 2]</td><td class="q-marks">2</td></tr>
+          <tr><td class="q-num">b.</td><td class="q-text">Show that $x^{p-q}.y^{q-r}.z^{r-p} = 1$.[cite: 2]</td><td class="q-marks">4</td></tr>
+          <tr><td class="q-num">c.</td><td class="q-text">If $Q = 0$, prove that $b\log_k\left(\frac{m}{n}\right) = \log_k n$.[cite: 2]</td><td class="q-marks">4</td></tr>
+        </table>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>3.</strong> $A = \left(y - \frac{x}{2}\right)^6$ and $B = r - 96x + sx^2 + \dots$[cite: 3]
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">a.</td><td class="q-text">Prove that $0! = 1$[cite: 3]</td><td class="q-marks">2</td></tr>
+          <tr><td class="q-num">b.</td><td class="q-text">If $A = B$, find the values of $y, s,$ and $r$.[cite: 3]</td><td class="q-marks">4</td></tr>
+          <tr><td class="q-num">c.</td><td class="q-text">If $y = 2$ in expression $A$, expand up to $x^3$ in ascending powers of $x$ and using this find the approximate value of $(1.05)^6$ up to four decimal places.[cite: 3]</td><td class="q-marks">4</td></tr>
+        </table>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-container">
+        <div class="stem">
+          <strong>4.</strong> $\left(2x^2 - \frac{1}{2x^3}\right)^{10}$ and $\left(x^2 + \frac{y}{x}\right)^6$ are two binomial expressions.[cite: 4]
+        </div>
+        <table class="sub-questions">
+          <tr><td class="q-num">a.</td><td class="q-text">Find the middle term of the first binomial expression.[cite: 4]</td><td class="q-marks">2</td></tr>
+          <tr><td class="q-num">b.</td><td class="q-text">Find the term independent of $x$ in the expansion of the first binomial and find its value.[cite: 4]</td><td class="q-marks">4</td></tr>
+          <tr><td class="q-num">c.</td><td class="q-text">If the coefficient of $x^3$ in the expansion of the second binomial expression is 540, find the value of $y$.[cite: 4]</td><td class="q-marks">4</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let currentLang = 'bn';
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    if (lang === 'bn') {
+      document.getElementById('lang-bn').style.display = 'block';
+      document.getElementById('lang-en').style.display = 'none';
+    } else {
+      document.getElementById('lang-bn').style.display = 'none';
+      document.getElementById('lang-en').style.display = 'block';
+    }
+  }
+
+  function startExam() {
+    document.getElementById('exam-paper').style.display = 'block';
+    setLanguage(currentLang); 
+  }
+</script>
+
+</body>
+</html>

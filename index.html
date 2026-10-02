@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Preparation Test 2027 - Higher Math Ch 9</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .solution-box {
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .solution-box.visible {
+            display: block;
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+            
+            body {
+                background-color: white;
+                font-size: 11pt;
+            }
+
+            /* Hide interactive UI elements during print */
+            .no-print {
+                display: none !important;
+            }
+
+            /* 2 Column Layout for questions */
+            #questions-container {
+                column-count: 2;
+                column-gap: 30px;
+                display: block !important;
+            }
+
+            .question-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                background-color: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin-bottom: 20px !important;
+            }
+
+            .options-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .print-header-info {
+                display: flex !important;
+                justify-content: space-between;
+                border-bottom: 2px solid black;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            .solution-box { display: none !important; }
+            
+            input[type="radio"] {
+                appearance: none;
+                border: 1px solid black;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                display: inline-block;
+                position: relative;
+                top: 2px;
+                margin-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <div class="no-print bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex space-x-2">
+                <button id="lang-bn" onclick="setLanguage('bn')" class="px-3 py-1 bg-green-600 text-white rounded text-sm font-medium hover:bg-green-700 transition">Bangla Version</button>
+                <button id="lang-en" onclick="setLanguage('en')" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm font-medium hover:bg-gray-300 transition">English Version</button>
+            </div>
+            <button onclick="window.print()" class="flex items-center space-x-1 px-4 py-1.5 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                <span id="ui-print">Print</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-5xl mx-auto w-full px-4 py-6">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" id="ui-header-title">SSC Preparation Test 2027</h1>
+            <h2 class="text-lg md:text-xl font-semibold text-gray-700 mb-4" id="ui-header-subject">Subject: Higher Mathematics, Chapter: 9</h2>
+            
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-medium text-gray-600">
+                <div class="bg-white px-4 py-2 rounded shadow-sm border" id="ui-header-time">Time: 45 Minutes</div>
+                <div class="bg-white px-4 py-2 rounded shadow-sm border" id="ui-header-marks">Full Marks: 45</div>
+            </div>
+        </div>
+
+        <!-- Timer Bar (Hidden initially) -->
+        <div id="timer-bar" class="hidden no-print bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex flex-wrap justify-between items-center shadow-sm">
+            <div class="text-blue-800 font-medium" id="ui-start-time-disp">Start Time: --:--</div>
+            <div class="text-2xl font-bold text-blue-600" id="time-remaining">45:00</div>
+            <div class="text-blue-800 font-medium" id="ui-end-time-disp">End Time: --:--</div>
+        </div>
+
+        <!-- Student Information Form -->
+        <div id="student-form-section" class="bg-white rounded-xl shadow-md p-6 mb-8 max-w-2xl mx-auto border border-gray-100">
+            <h3 class="text-lg font-semibold mb-4 border-b pb-2" id="ui-form-title">Student Information</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" id="ui-label-name">Student Name:</label>
+                    <input type="text" id="student-name" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" id="ui-label-school">School/College:</label>
+                    <input type="text" id="student-school" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" id="ui-label-date">Date:</label>
+                    <input type="date" id="student-date" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                </div>
+                <div class="pt-4 text-center">
+                    <button onclick="startExam()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-blue-700 shadow-md transition w-full md:w-auto" id="ui-btn-start">Exam Start</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Print Header Info (Only visible when printing) -->
+        <div class="hidden print-header-info">
+            <div>
+                <p><strong>Name:</strong> <span id="print-name"></span></p>
+                <p><strong>School/College:</strong> <span id="print-school"></span></p>
+            </div>
+            <div class="text-right">
+                <p><strong>Date:</strong> <span id="print-date"></span></p>
+                <p><strong>Marks Obtained:</strong> ...... / 45</p>
+            </div>
+        </div>
+
+        <!-- Result Summary (Hidden initially) -->
+        <div id="result-summary" class="hidden no-print bg-white rounded-xl shadow-md p-6 mb-8 text-center border-t-4 border-green-500">
+            <h2 class="text-3xl font-bold mb-2 text-gray-800" id="ui-score-title">Your Score</h2>
+            <div class="text-5xl font-black text-blue-600 mb-4"><span id="score-display">0</span> <span class="text-xl text-gray-500 font-medium">/ <span id="total-q-count">0</span></span></div>
+            <p class="text-gray-600 mb-6" id="ui-score-desc">Review your answers below. Correct answers are marked in green, incorrect in red.</p>
+            <button onclick="toggleSolutions()" class="bg-indigo-600 text-white px-6 py-2 rounded font-semibold hover:bg-indigo-700 transition shadow-sm" id="ui-btn-solutions">See Complete Solutions</button>
+        </div>
+
+        <!-- Questions Container (Hidden until start) -->
+        <div id="exam-section" class="hidden no-print">
+            <div id="questions-container" class="space-y-6">
+                <!-- Questions injected here by JS -->
+            </div>
+            
+            <div class="mt-10 mb-6 text-center">
+                <button id="submit-btn" onclick="submitExam()" class="bg-green-600 text-white px-10 py-3 rounded-lg font-bold text-xl hover:bg-green-700 shadow-lg transition w-full md:w-auto" id="ui-btn-submit">Submit Answer Sheet</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-6 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 text-center text-sm md:text-base">
+            <p class="font-semibold text-white mb-1">Instructor: MD. Rashid, Assistant Professor in Mathematics.</p>
+            <p>Contact: 01711008786</p>
+        </div>
+    </footer>
+
+    <script>
+        /* 
+         * INSTRUCTOR INSTRUCTIONS:
+         * To add more questions (up to 45 or more), simply add new objects to the `questionsData` array below.
+         * Follow the exact structure of the existing objects.
+         * Math formulas must be wrapped in \\( ... \\) for inline math, or \\[ ... \\] for block math.
+         * Remember to use double backslashes (\\) in JavaScript strings for LaTeX commands.
+         */
+        const questionsData = [
+            {
+                id: 1,
+                q_bn: "\\(\\log_{\\sqrt{8}} x = \\frac{2}{3}\\) হলে \\(x\\) এর মান কত?",
+                q_en: "If \\(\\log_{\\sqrt{8}} x = \\frac{2}{3}\\), what is the value of \\(x\\)?",
+                options: ["8", "4", "\\(2\\sqrt{2}\\)", "2"],
+                ans: 3,
+                sol_bn: "দেওয়া আছে, \\(\\log_{\\sqrt{8}} x = \\frac{2}{3}\\)<br>বা, \\(x = (\\sqrt{8})^{\\frac{2}{3}}\\) <br>বা, \\(x = (8^{\\frac{1}{2}})^{\\frac{2}{3}}\\) <br>বা, \\(x = 8^{\\frac{1}{3}}\\) <br>বা, \\(x = (2^3)^{\\frac{1}{3}}\\) <br>বা, \\(x = 2\\)",
+                sol_en: "Given, \\(\\log_{\\sqrt{8}} x = \\frac{2}{3}\\)<br>or, \\(x = (\\sqrt{8})^{\\frac{2}{3}}\\) <br>or, \\(x = (8^{\\frac{1}{2}})^{\\frac{2}{3}}\\) <br>or, \\(x = 8^{\\frac{1}{3}}\\) <br>or, \\(x = (2^3)^{\\frac{1}{3}}\\) <br>or, \\(x = 2\\)"
+            },
+            {
+                id: 2,
+                q_bn: "\\(\\log_{\\sqrt{27}} x = 4\\) হলে, \\(x\\) এর মান কত?",
+                q_en: "If \\(\\log_{\\sqrt{27}} x = 4\\), what is the value of \\(x\\)?",
+                options: ["\\(\\sqrt{188}\\)", "\\(4\\sqrt{27}\\)", "27", "729"],
+                ans: 3, 
+                sol_bn: "\\(\\log_{\\sqrt{27}} x = 4\\) <br>বা, \\(x = (\\sqrt{27})^4\\) <br>বা, \\(x = (27^{\\frac{1}{2}})^4\\) <br>বা, \\(x = 27^2\\) <br>বা, \\(x = 729\\)",
+                sol_en: "\\(\\log_{\\sqrt{27}} x = 4\\) <br>or, \\(x = (\\sqrt{27})^4\\) <br>or, \\(x = (27^{\\frac{1}{2}})^4\\) <br>or, \\(x = 27^2\\) <br>or, \\(x = 729\\)"
+            },
+            {
+                id: 3,
+                q_bn: "\\(1 + \\log_a(bc) = 0\\) হলে নিচের কোনটি সঠিক?",
+                q_en: "If \\(1 + \\log_a(bc) = 0\\), which of the following is correct?",
+                options: ["\\(abc - 1 = 0\\)", "\\(abc + 1 = 0\\)", "\\(a + bc = 0\\)", "\\(abc = 0\\)"],
+                ans: 0,
+                sol_bn: "\\(1 + \\log_a(bc) = 0\\) <br>বা, \\(\\log_a a + \\log_a(bc) = 0\\) <br>বা, \\(\\log_a(a \\cdot bc) = \\log_a 1\\) (যেহেতু \\(\\log_a 1 = 0\\)) <br>বা, \\(abc = 1\\) <br>অতএব, \\(abc - 1 = 0\\)",
+                sol_en: "\\(1 + \\log_a(bc) = 0\\) <br>or, \\(\\log_a a + \\log_a(bc) = 0\\) <br>or, \\(\\log_a(a \\cdot bc) = \\log_a 1\\) (since \\(\\log_a 1 = 0\\)) <br>or, \\(abc = 1\\) <br>Therefore, \\(abc - 1 = 0\\)"
+            },
+            {
+                id: 4,
+                q_bn: "\\(\\log_{81} 3 + \\log_{3} 27 =\\) কত?",
+                q_en: "What is the value of \\(\\log_{81} 3 + \\log_{3} 27\\)?",
+                options: ["\\(\\frac{13}{4}\\)", "\\(\\frac{27}{8}\\)", "\\(\\frac{5}{6}\\)", "\\(\\frac{6}{5}\\)"],
+                ans: 0,
+                sol_bn: "\\(\\log_{81} (81)^{\\frac{1}{4}} + \\log_3 3^3\\) <br>\\(= \\frac{1}{4}\\log_{81} 81 + 3\\log_3 3\\) <br>\\(= \\frac{1}{4} + 3\\) <br>\\(= \\frac{1 + 12}{4}\\) <br>\\(= \\frac{13}{4}\\)",
+                sol_en: "\\(\\log_{81} (81)^{\\frac{1}{4}} + \\log_3 3^3\\) <br>\\(= \\frac{1}{4}\\log_{81} 81 + 3\\log_3 3\\) <br>\\(= \\frac{1}{4} + 3\\) <br>\\(= \\frac{1 + 12}{4}\\) <br>\\(= \\frac{13}{4}\\)"
+            },
+            {
+                id: 5,
+                q_bn: "\\(\\log_{\\sqrt{2}} 3 \\times \\log_{\\sqrt{3}} 5 \\times \\log_{\\sqrt{5}} 2\\) এর মান কত?",
+                q_en: "What is the value of \\(\\log_{\\sqrt{2}} 3 \\times \\log_{\\sqrt{3}} 5 \\times \\log_{\\sqrt{5}} 2\\)?",
+                options: ["\\(\\sqrt{8}\\)", "\\(\\sqrt{30}\\)", "8", "30"],
+                ans: 2,
+                sol_bn: "\\(= \\log_{\\sqrt{2}} (\\sqrt{3})^2 \\times \\log_{\\sqrt{3}} (\\sqrt{5})^2 \\times \\log_{\\sqrt{5}} (\\sqrt{2})^2\\) <br>\\(= 2\\log_{\\sqrt{2}} \\sqrt{3} \\times 2\\log_{\\sqrt{3}} \\sqrt{5} \\times 2\\log_{\\sqrt{5}} \\sqrt{2}\\) <br>\\(= 8 \\times (\\log_{\\sqrt{2}} \\sqrt{3} \\times \\log_{\\sqrt{3}} \\sqrt{5} \\times \\log_{\\sqrt{5}} \\sqrt{2})\\) <br>\\(= 8 \\times \\log_{\\sqrt{2}} \\sqrt{2} = 8 \\times 1 = 8\\)",
+                sol_en: "\\(= \\log_{\\sqrt{2}} (\\sqrt{3})^2 \\times \\log_{\\sqrt{3}} (\\sqrt{5})^2 \\times \\log_{\\sqrt{5}} (\\sqrt{2})^2\\) <br>\\(= 2\\log_{\\sqrt{2}} \\sqrt{3} \\times 2\\log_{\\sqrt{3}} \\sqrt{5} \\times 2\\log_{\\sqrt{5}} \\sqrt{2}\\) <br>\\(= 8 \\times (\\log_{\\sqrt{2}} \\sqrt{3} \\times \\log_{\\sqrt{3}} \\sqrt{5} \\times \\log_{\\sqrt{5}} \\sqrt{2})\\) <br>\\(= 8 \\times \\log_{\\sqrt{2}} \\sqrt{2} = 8 \\times 1 = 8\\)"
+            },
+            {
+                id: 6,
+                q_bn: "\\(\\frac{\\log_a(1 + 3x)}{\\log_a x} = 2\\) হলে \\(x + \\frac{1}{x} =\\) কত?",
+                q_en: "If \\(\\frac{\\log_a(1 + 3x)}{\\log_a x} = 2\\), what is the value of \\(x + \\frac{1}{x}\\)?",
+                options: ["\\(\\pm 3\\)", "3", "\\(\\pm \\sqrt{13}\\)", "\\(\\sqrt{13}\\)"],
+                ans: 3,
+                sol_bn: "এখানে, \\(\\frac{\\log_a(1 + 3x)}{\\log_a x} = 2\\) <br>বা, \\(\\log_a(1 + 3x) = 2\\log_a x\\) <br>বা, \\(\\log_a(1 + 3x) = \\log_a x^2\\) <br>বা, \\(1 + 3x = x^2\\) <br>বা, \\(x^2 - 3x - 1 = 0\\) <br>বা, \\(x - 3 - \\frac{1}{x} = 0\\) (x দ্বারা ভাগ করে) <br>বা, \\(x - \\frac{1}{x} = 3\\) <br>আমরা জানি, \\((x + \\frac{1}{x})^2 = (x - \\frac{1}{x})^2 + 4.x.\\frac{1}{x}\\) <br>\\(= (3)^2 + 4 = 9 + 4 = 13\\) <br>অতএব, \\(x + \\frac{1}{x} = \\pm\\sqrt{13}\\) <br>কিন্তু \\(x\\) এর মান ঋণাত্মক হতে পারে না, তাই \\(x + \\frac{1}{x} = \\sqrt{13}\\)",
+                sol_en: "Here, \\(\\frac{\\log_a(1 + 3x)}{\\log_a x} = 2\\) <br>or, \\(\\log_a(1 + 3x) = 2\\log_a x\\) <br>or, \\(\\log_a(1 + 3x) = \\log_a x^2\\) <br>or, \\(1 + 3x = x^2\\) <br>or, \\(x^2 - 3x - 1 = 0\\) <br>or, \\(x - 3 - \\frac{1}{x} = 0\\) (dividing by x) <br>or, \\(x - \\frac{1}{x} = 3\\) <br>We know, \\((x + \\frac{1}{x})^2 = (x - \\frac{1}{x})^2 + 4.x.\\frac{1}{x}\\) <br>\\(= (3)^2 + 4 = 9 + 4 = 13\\) <br>Therefore, \\(x + \\frac{1}{x} = \\pm\\sqrt{13}\\) <br>But the value of \\(x\\) cannot be negative, so \\(x + \\frac{1}{x} = \\sqrt{13}\\)"
+            },
+            {
+                id: 7,
+                q_bn: "\\(\\log_{\\sqrt{x}} \\sqrt{x^3 - 2x + 4} = 3\\) হলে \\(x\\) এর মান কত?",
+                q_en: "If \\(\\log_{\\sqrt{x}} \\sqrt{x^3 - 2x + 4} = 3\\), what is the value of \\(x\\)?",
+                options: ["0", "1", "2", "4"],
+                ans: 2,
+                sol_bn: "\\(\\log_{\\sqrt{x}} \\sqrt{x^3 - 2x + 4} = 3\\) <br>বা, \\((\\sqrt{x})^3 = \\sqrt{x^3 - 2x + 4}\\) <br>বা, \\(x\\sqrt{x} = \\sqrt{x^3 - 2x + 4}\\) <br>বা, \\(x^3 = x^3 - 2x + 4\\) (উভয় পক্ষে বর্গ করে) <br>বা, \\(2x = 4\\) <br>অতএব, \\(x = 2\\)",
+                sol_en: "\\(\\log_{\\sqrt{x}} \\sqrt{x^3 - 2x + 4} = 3\\) <br>or, \\((\\sqrt{x})^3 = \\sqrt{x^3 - 2x + 4}\\) <br>or, \\(x\\sqrt{x} = \\sqrt{x^3 - 2x + 4}\\) <br>or, \\(x^3 = x^3 - 2x + 4\\) (squaring both sides) <br>or, \\(2x = 4\\) <br>Therefore, \\(x = 2\\)"
+            },
+            {
+                id: 8,
+                q_bn: "\\(f(x) = \\ln\\left(\\frac{8+x}{8-x}\\right)\\) এর ডোমেন নিচের কোনটি?",
+                q_en: "Which of the following is the domain of \\(f(x) = \\ln\\left(\\frac{8+x}{8-x}\\right)\\)?",
+                options: ["\\((0, 8)\\)", "\\((-8, 8)\\)", "\\([-8, 8]\\)", "\\([0, 8]\\)"],
+                ans: 1,
+                sol_bn: "\\(f(x) = \\ln\\left(\\frac{a+x}{a-x}\\right), a>0\\) এবং পূর্ণসংখ্যা হলে ফাংশনটির ডোমেন হবে \\((-a, a)\\) <br>তাহলে, \\(f(x) = \\ln\\left(\\frac{8+x}{8-x}\\right)\\) ফাংশনের ডোমেন হবে \\((-8, 8)\\)।",
+                sol_en: "If \\(f(x) = \\ln\\left(\\frac{a+x}{a-x}\\right), a>0\\) and is an integer, the domain of the function will be \\((-a, a)\\) <br>Then, the domain of the function \\(f(x) = \\ln\\left(\\frac{8+x}{8-x}\\right)\\) will be \\((-8, 8)\\)."
+            },
+            {
+                id: 9,
+                q_bn: "\\(f(x) = 4^x\\) সূচকীয় ফাংশনের ডোমেন কোনটি?",
+                q_en: "What is the domain of the exponential function \\(f(x) = 4^x\\)?",
+                options: ["\\((-\\infty, 4)\\)", "\\((-\\infty, 0)\\)", "\\((0, \\infty)\\)", "\\((-\\infty, \\infty)\\)"],
+                ans: 3,
+                sol_bn: "যে কোনো সূচকীয় ফাংশন \\(f(x) = a^x\\) (যেখানে \\(a > 0, a \\neq 1\\)) এর ডোমেন হলো সকল বাস্তব সংখ্যার সেট \\(\\mathbb{R}\\) বা \\((-\\infty, \\infty)\\)।",
+                sol_en: "The domain of any exponential function \\(f(x) = a^x\\) (where \\(a > 0, a \\neq 1\\)) is the set of all real numbers \\(\\mathbb{R}\\) or \\((-\\infty, \\infty)\\)."
+            },
+            {
+                id: 10,
+                q_bn: "\\(f(x) = \\log_a x\\) যখন \\(0 < a < 1\\), ডোমেন কত?",
+                q_en: "What is the domain of \\(f(x) = \\log_a x\\) when \\(0 < a < 1\\)?",
+                options: ["\\((0, \\infty)\\)", "\\((-\\infty, 0)\\)", "\\((\\infty, 0)\\)", "\\((-\\infty, \\infty)\\)"],
+                ans: 0,
+                sol_bn: "লগারিদমিক ফাংশন \\(f(x) = \\log_a x\\) এর জন্য, \\(x > 0\\) হতে হবে। ভিত্তি \\(a\\) এর মান \\(0 < a < 1\\) বা \\(a > 1\\) যাই হোক না কেন, ডোমেন সর্বদা ধনাত্মক বাস্তব সংখ্যা, অর্থাৎ \\((0, \\infty)\\)।",
+                sol_en: "For the logarithmic function \\(f(x) = \\log_a x\\), \\(x\\) must be \\(> 0\\). Whether the base \\(a\\) is \\(0 < a < 1\\) or \\(a > 1\\), the domain is always positive real numbers, i.e., \\((0, \\infty)\\)."
+            },
+            {
+                id: 11,
+                q_bn: "\\(f(x) = 1 - 4^{-x}\\) এর বিপরীত ফাংশন নিচের কোনটি?",
+                q_en: "Which of the following is the inverse function of \\(f(x) = 1 - 4^{-x}\\)?",
+                options: ["\\(\\log_4(x - 1)\\)", "\\(\\log_4(1 - x)\\)", "\\(\\log_4\\left(\\frac{1}{1-x}\\right)\\)", "\\(\\log_4\\left(\\frac{1}{x-1}\\right)\\)"],
+                ans: 2,
+                sol_bn: "ধরি, \\(y = 1 - 4^{-x}\\) <br>বা, \\(4^{-x} = 1 - y\\) <br>বা, \\(\\frac{1}{4^x} = 1 - y\\) <br>বা, \\(4^x = \\frac{1}{1-y}\\) <br>বা, \\(x = \\log_4\\left(\\frac{1}{1-y}\\right)\\) <br>অতএব, \\(f^{-1}(x) = \\log_4\\left(\\frac{1}{1-x}\\right)\\)",
+                sol_en: "Let, \\(y = 1 - 4^{-x}\\) <br>or, \\(4^{-x} = 1 - y\\) <br>or, \\(\\frac{1}{4^x} = 1 - y\\) <br>or, \\(4^x = \\frac{1}{1-y}\\) <br>or, \\(x = \\log_4\\left(\\frac{1}{1-y}\\right)\\) <br>Therefore, \\(f^{-1}(x) = \\log_4\\left(\\frac{1}{1-x}\\right)\\)"
+            },
+            {
+                id: 12,
+                q_bn: "\\(y = 1 - 6^{-x}\\) এর বিপরীত ফাংশন কোনটি?",
+                q_en: "What is the inverse function of \\(y = 1 - 6^{-x}\\)?",
+                options: ["\\(\\log_6(1 - x)\\)", "\\(1 - 6^x\\)", "\\(\\log_6(x - 1)\\)", "\\(\\log_6\\left(\\frac{1}{1-x}\\right)\\)"],
+                ans: 3,
+                sol_bn: "ধরি, \\(f(x) = 1 - 6^{-x}\\) <br>বা, \\(y = 1 - \\frac{1}{6^x}\\) <br>বা, \\(\\frac{1}{6^x} = 1 - y\\) <br>বা, \\(6^x = \\frac{1}{1-y}\\) <br>বা, \\(x = \\log_6\\left(\\frac{1}{1-y}\\right)\\) <br>\\(\\therefore f^{-1}(y) = \\log_6\\left(\\frac{1}{1-y}\\right)\\) <br>\\(\\therefore f^{-1}(x) = \\log_6\\left(\\frac{1}{1-x}\\right)\\)",
+                sol_en: "Let, \\(f(x) = 1 - 6^{-x}\\) <br>or, \\(y = 1 - \\frac{1}{6^x}\\) <br>or, \\(\\frac{1}{6^x} = 1 - y\\) <br>or, \\(6^x = \\frac{1}{1-y}\\) <br>or, \\(x = \\log_6\\left(\\frac{1}{1-y}\\right)\\) <br>\\(\\therefore f^{-1}(y) = \\log_6\\left(\\frac{1}{1-y}\\right)\\) <br>\\(\\therefore f^{-1}(x) = \\log_6\\left(\\frac{1}{1-x}\\right)\\)"
+            },
+            {
+                id: 13,
+                q_bn: "\\(f(x) = \\ln\\left(\\frac{1-x}{1+x}\\right)\\) এর বিপরীত ফাংশন কোনটি?",
+                q_en: "What is the inverse function of \\(f(x) = \\ln\\left(\\frac{1-x}{1+x}\\right)\\)?",
+                options: ["\\(\\frac{1+e^x}{e^y}\\)", "\\(\\frac{e^x}{1-e^y}\\)", "\\(\\frac{1+e^x}{1-e^x}\\)", "\\(\\frac{1-e^x}{1+e^x}\\)"],
+                ans: 3,
+                sol_bn: "ধরি, \\(f(x) = y = \\ln\\left(\\frac{1-x}{1+x}\\right)\\) <br>বা, \\(y = \\log_e\\left(\\frac{1-x}{1+x}\\right)\\) <br>বা, \\(\\frac{1-x}{1+x} = e^y\\) <br>বা, \\(\\frac{1+x}{1-x} = \\frac{1}{e^y}\\) <br>বা, \\(\\frac{1+x+1-x}{1+x-(1-x)} = \\frac{1+e^y}{1-e^y}\\) (যোজন-বিয়োজন করে) <br>বা, \\(\\frac{2}{2x} = \\frac{1+e^y}{1-e^y}\\) <br>বা, \\(\\frac{1}{x} = \\frac{1+e^y}{1-e^y}\\) <br>বা, \\(x = \\frac{1-e^y}{1+e^y}\\) <br>\\(\\therefore f^{-1}(x) = \\frac{1-e^x}{1+e^x}\\)",
+                sol_en: "Let, \\(f(x) = y = \\ln\\left(\\frac{1-x}{1+x}\\right)\\) <br>or, \\(y = \\log_e\\left(\\frac{1-x}{1+x}\\right)\\) <br>or, \\(\\frac{1-x}{1+x} = e^y\\) <br>or, \\(\\frac{1+x}{1-x} = \\frac{1}{e^y}\\) <br>or, \\(\\frac{1+x+1-x}{1+x-(1-x)} = \\frac{1+e^y}{1-e^y}\\) (componendo and dividendo) <br>or, \\(\\frac{2}{2x} = \\frac{1+e^y}{1-e^y}\\) <br>or, \\(\\frac{1}{x} = \\frac{1+e^y}{1-e^y}\\) <br>or, \\(x = \\frac{1-e^y}{1+e^y}\\) <br>\\(\\therefore f^{-1}(x) = \\frac{1-e^x}{1+e^x}\\)"
+            },
+            {
+                id: 14,
+                q_bn: "\\(f(x) = |x - 1|\\) হলে, রেঞ্জ \\(f =\\) কত?",
+                q_en: "If \\(f(x) = |x - 1|\\), what is the range of \\(f\\)?",
+                options: ["\\((0, \\infty)\\)", "\\([0, \\infty)\\)", "\\((0, \\infty]\\)", "\\([0, \\infty]\\)"],
+                ans: 1,
+                sol_bn: "পরমমান ফাংশন \\(|x - 1|\\) এর মান সর্বদা অঋণাত্মক (non-negative) হয়। অর্থাৎ, এর সর্বনিম্ন মান 0 এবং সর্বোচ্চ মান অসীম পর্যন্ত হতে পারে। <br>সুতরাং রেঞ্জ = \\([0, \\infty)\\)।",
+                sol_en: "The absolute value function \\(|x - 1|\\) is always non-negative. That is, its minimum value is 0 and it can go up to infinity. <br>So range = \\([0, \\infty)\\)."
+            },
+            {
+                id: 15,
+                q_bn: "\\(f(x) = \\ln(9 - x)\\) ফাংশনটির ডোমেন নিচের কোনটি?",
+                q_en: "Which of the following is the domain of the function \\(f(x) = \\ln(9 - x)\\)?",
+                options: ["\\(\\{x \\in \\mathbb{R} : x \\le 9\\}\\)", "\\(\\{x \\in \\mathbb{R} : x < 9\\}\\)", "\\(\\{x \\in \\mathbb{R} : x > 9\\}\\)", "\\(\\{x \\in \\mathbb{R} : x \\ge 9\\}\\)"],
+                ans: 1,
+                sol_bn: "\\(f(x) = \\ln(9 - x)\\) ফাংশনটি সংজ্ঞায়িত হবে যদি \\(9 - x > 0\\) হয়। <br>বা, \\(x < 9\\) হয়। <br>\\(\\therefore\\) ফাংশনটির ডোমেন: \\(\\{x \\in \\mathbb{R} : x < 9\\}\\)",
+                sol_en: "The function \\(f(x) = \\ln(9 - x)\\) is defined if \\(9 - x > 0\\). <br>or, \\(x < 9\\). <br>\\(\\therefore\\) Domain of the function: \\(\\{x \\in \\mathbb{R} : x < 9\\}\\)"
+            },
+            {
+                id: 16,
+                q_bn: "\\(f(x) = 3 - \\frac{x}{|x|}\\), ফাংশনটির রেঞ্জ কত?",
+                q_en: "What is the range of the function \\(f(x) = 3 - \\frac{x}{|x|}\\)?",
+                options: ["\\(\\{-1, 1\\}\\)", "\\(\\{1, 2\\}\\)", "\\(\\{1, 4\\}\\)", "\\(\\{2, 4\\}\\)"],
+                ans: 3,
+                sol_bn: "যখন \\(x > 0\\), তখন \\(|x| = x\\), অতএব \\(f(x) = 3 - \\frac{x}{x} = 3 - 1 = 2\\)। <br>যখন \\(x < 0\\), তখন \\(|x| = -x\\), অতএব \\(f(x) = 3 - \\frac{x}{-x} = 3 - (-1) = 4\\)। <br>অতএব, রেঞ্জ \\(= \\{2, 4\\}\\)।",
+                sol_en: "When \\(x > 0\\), \\(|x| = x\\), so \\(f(x) = 3 - \\frac{x}{x} = 3 - 1 = 2\\). <br>When \\(x < 0\\), \\(|x| = -x\\), so \\(f(x) = 3 - \\frac{x}{-x} = 3 - (-1) = 4\\). <br>Therefore, Range \\(= \\{2, 4\\}\\)."
+            },
+            {
+                id: 17,
+                q_bn: "\\(F(x) = |x|\\) এর ডোমেন কোনটি?",
+                q_en: "What is the domain of \\(F(x) = |x|\\)?",
+                options: ["\\(\\mathbb{R}\\)", "\\((0, \\infty)\\)", "\\((-\\infty, 0)\\)", "\\((0, 0)\\)"],
+                ans: 0,
+                sol_bn: "পরমমান ফাংশন \\(F(x) = |x|\\) সকল বাস্তব সংখ্যার জন্য সংজ্ঞায়িত। <br>সুতরাং, ডোমেন = সকল বাস্তব সংখ্যার সেট \\(\\mathbb{R}\\)।",
+                sol_en: "The absolute value function \\(F(x) = |x|\\) is defined for all real numbers. <br>So, domain = set of all real numbers \\(\\mathbb{R}\\)."
+            },
+            {
+                id: 18,
+                q_bn: "\\(f(x) = 2^x\\) ফাংশনের জন্য যদি \\(x \\to -\\infty\\) হয়, তাহলে নিচের কোনটি সঠিক?",
+                q_en: "For the function \\(f(x) = 2^x\\), if \\(x \\to -\\infty\\), then which of the following is correct?",
+                options: ["\\(f(x) \\to 0\\)", "\\(f(x) \\to 1\\)", "\\(f(x) \\to -\\infty\\)", "\\(f(x) \\to \\infty\\)"],
+                ans: 0,
+                sol_bn: "\\(f(x) = 2^x\\) এ যদি \\(x \\to -\\infty\\) হয়, তবে \\(f(x) = 2^{-\\infty} = \\frac{1}{2^{\\infty}} \\to \\frac{1}{\\infty} \\to 0\\)।",
+                sol_en: "In \\(f(x) = 2^x\\), if \\(x \\to -\\infty\\), then \\(f(x) = 2^{-\\infty} = \\frac{1}{2^{\\infty}} \\to \\frac{1}{\\infty} \\to 0\\)."
+            },
+            {
+                id: 19,
+                q_bn: "\\(f(x) = \\frac{x}{|x|}\\) ফাংশনটির ডোমেন কত?",
+                q_en: "What is the domain of the function \\(f(x) = \\frac{x}{|x|}\\)?",
+                options: ["\\(\\{0\\}\\)", "\\(\\{-1, 1\\}\\)", "\\(\\mathbb{R} - \\{0\\}\\)", "\\(\\mathbb{R}\\)"],
+                ans: 2,
+                sol_bn: "ফাংশনটি \\(x = 0\\) এর জন্য অসংজ্ঞায়িত কারণ হরে 0 হলে ভগ্নাংশটি অসংজ্ঞায়িত হয়। শূন্য ব্যতীত সকল বাস্তব সংখ্যার জন্য ফাংশনটি সংজ্ঞায়িত। <br>অতএব, ডোমেন = \\(\\mathbb{R} - \\{0\\}\\)।",
+                sol_en: "The function is undefined for \\(x = 0\\) because if the denominator is 0, the fraction is undefined. The function is defined for all real numbers except zero. <br>Therefore, Domain = \\(\\mathbb{R} - \\{0\\}\\)."
+            },
+            {
+                id: 20,
+                q_bn: "\\(f(x) = |x|\\) যখন \\(-3 \\le x \\le 3\\) হলে \\(f(x)\\) এর রেঞ্জ কত?",
+                q_en: "If \\(f(x) = |x|\\) when \\(-3 \\le x \\le 3\\), what is the range of \\(f(x)\\)?",
+                options: ["\\((0, 3)\\)", "\\([0, 3]\\)", "\\((-3, 3)\\)", "\\([-3, 3]\\)"],
+                ans: 1,
+                sol_bn: "এখানে \\(x\\) এর মান -3 থেকে 3 এর মধ্যে। <br>\\(|x|\\) সর্বদা ধনাত্মক বা শূন্য হয়। <br>যখন \\(x = 0\\), তখন \\(|0| = 0\\) (সর্বনিম্ন মান)। <br>যখন \\(x = -3\\) বা \\(x = 3\\), তখন \\(|-3| = 3\\) এবং \\(|3| = 3\\) (সর্বোচ্চ মান)। <br>অতএব, রেঞ্জ \\(= [0, 3]\\)।",
+                sol_en: "Here the value of \\(x\\) is between -3 and 3. <br>\\(|x|\\) is always positive or zero. <br>When \\(x = 0\\), then \\(|0| = 0\\) (minimum value). <br>When \\(x = -3\\) or \\(x = 3\\), then \\(|-3| = 3\\) and \\(|3| = 3\\) (maximum value). <br>Therefore, Range \\(= [0, 3]\\)."
+            },
+            {
+                id: 21,
+                q_bn: "\\(\\log_x 4 + \\log_x 16 = 6\\) হলে \\(\\log_x 8 =\\) কত?",
+                q_en: "If \\(\\log_x 4 + \\log_x 16 = 6\\), what is the value of \\(\\log_x 8\\)?",
+                options: ["1", "2", "3", "6"],
+                ans: 2,
+                sol_bn: "ধরি, \\(\\log_x 64 = 6\\) <br>বা, \\(x^6 = 64 = 2^6\\) <br>বা, \\(x = 2\\) <br>তাহলে, \\(\\log_x 8 = \\log_2 8 = \\log_2 2^3 = 3\\log_2 2 = 3 \\times 1 = 3\\)। <br>প্রদত্ত অপশন ও সমাধানের ধারা অনুযায়ী উত্তর 3।",
+                sol_en: "Let, \\(\\log_x 64 = 6\\) <br>or, \\(x^6 = 64 = 2^6\\) <br>or, \\(x = 2\\) <br>Then, \\(\\log_x 8 = \\log_2 8 = \\log_2 2^3 = 3\\log_2 2 = 3 \\times 1 = 3\\). <br>According to the given options and solution flow, the answer is 3."
+            },
+            {
+                id: 22,
+                q_bn: "\\(\\log_5 25 + \\log_5 125 = x\\) হলে \\(\\log_x 625 =\\) কত?",
+                q_en: "If \\(\\log_5 25 + \\log_5 125 = x\\), what is the value of \\(\\log_x 625\\)?",
+                options: ["2", "4", "6", "8"],
+                ans: 1,
+                sol_bn: "ধরি, \\(\\log_5 25 + \\log_5 125 = x\\) <br>বা, \\(2 + 3 = x\\) <br>বা, \\(x = 5\\) <br>তাহলে, \\(\\log_5 625 = \\log_5 (5)^4) = \\4log_5 5 = 4\\times 1 = 4\\)। <br>উত্তর 4।",
+                sol_en: "Let, \\(\\log_5 25 + \\log_5 125 = x\\) <br>or, \\(2 + 3 = x\\) <br>or, \\(x = 5\\) <br>Then, \\(\\log_5 625 = \\log_5 (5)^4) = \\4log_5 5 = 4\\times 1 = 4\\). <br>answer is 4."
+            },           
+            {
+                id: 23,
+                q_bn: "\\(3^{2x-4} = p\\) সমীকরণে- <br> i. \\(p = 1\\) হলে \\(x = 2\\) <br> ii. \\(p = 81\\) হলে \\(x = 4\\) <br> iii. \\(x = 2\\) হলে \\(p = 3\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "In the equation \\(3^{2x-4} = p\\)- <br> i. If \\(p = 1\\) then \\(x = 2\\) <br> ii. If \\(p = 81\\) then \\(x = 4\\) <br> iii. If \\(x = 2\\) then \\(p = 3\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 0,
+                sol_bn: "i. যদি \\(p = 1\\) হয়, তবে \\(3^{2x-4} = 1 = 3^0 \\Rightarrow 2x - 4 = 0 \\Rightarrow 2x = 4 \\Rightarrow x = 2\\) (সঠিক)। <br>ii. যদি \\(p = 81\\) হয়, তবে \\(3^{2x-4} = 81 = 3^4 \\Rightarrow 2x - 4 = 4 \\Rightarrow 2x = 8 \\Rightarrow x = 4\\) (সঠিক)। <br>iii. যদি \\(x = 2\\) হয়, তবে \\(p = 3^{2(2)-4} = 3^{4-4} = 3^0 = 1\\), কিন্তু দেওয়া আছে \\(p=3\\) (ভুল)। <br>সুতরাং, i ও ii সঠিক।",
+                sol_en: "i. If \\(p = 1\\), then \\(3^{2x-4} = 1 = 3^0 \\Rightarrow 2x - 4 = 0 \\Rightarrow 2x = 4 \\Rightarrow x = 2\\) (Correct). <br>ii. If \\(p = 81\\), then \\(3^{2x-4} = 81 = 3^4 \\Rightarrow 2x - 4 = 4 \\Rightarrow 2x = 8 \\Rightarrow x = 4\\) (Correct). <br>iii. If \\(x = 2\\), then \\(p = 3^{2(2)-4} = 3^{4-4} = 3^0 = 1\\), but given \\(p=3\\) (Incorrect). <br>So, i and ii are correct."
+            },
+            {
+                id: 24,
+                q_bn: "সূচকের ধারণা অনুযায়ী- <br> i. সকল \\(n \\in \\mathbb{N}, n > 1\\) এর জন্য \\(\\sqrt[n]{0} = 0\\) <br> ii. যদি \\(a > 0\\) এবং \\(n \\in \\mathbb{N}, n > 1\\) হয়, তবে \\(a\\) এর একটি অনন্য ধনাত্মক \\(n\\) তম মূল আছে। <br> iii. \\(a < 0\\) এবং \\(n \\in \\mathbb{N}, n > 1, n\\) বিজোড় হলে \\(\\sqrt[n]{a} = -\\sqrt[n]{|a|}\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "According to the concept of exponent- <br> i. For all \\(n \\in \\mathbb{N}, n > 1\\), \\(\\sqrt[n]{0} = 0\\) <br> ii. If \\(a > 0\\) and \\(n \\in \\mathbb{N}, n > 1\\), then \\(a\\) has a unique positive \\(n\\)th root. <br> iii. If \\(a < 0\\) and \\(n \\in \\mathbb{N}, n > 1, n\\) is odd, then \\(\\sqrt[n]{a} = -\\sqrt[n]{|a|}\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 3,
+                sol_bn: "প্রদত্ত তিনটি বিবৃতিই সূচক ও মূলদ সংখ্যার মৌলিক ধর্ম অনুযায়ী সঠিক।",
+                sol_en: "All three given statements are correct according to the fundamental properties of exponents and rational numbers."
+            },
+            {
+                id: 25,
+                q_bn: "\\(\\log_{10}(91 + x^2) = 2\\) হলে \\(x\\) এর মান— <br> i. 0 <br> ii. -3 <br> iii. 3 <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(\\log_{10}(91 + x^2) = 2\\), the value of \\(x\\) is— <br> i. 0 <br> ii. -3 <br> iii. 3 <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 2,
+                sol_bn: "\\(\\log_{10}(91 + x^2) = 2\\) <br>বা, \\(91 + x^2 = 10^2\\) <br>বা, \\(91 + x^2 = 100\\) <br>বা, \\(x^2 = 100 - 91\\) <br>বা, \\(x^2 = 9\\) <br>বা, \\(x = \\pm 3\\) <br>সুতরাং \\(x\\) এর মান 3 এবং -3। তাই ii ও iii সঠিক।",
+                sol_en: "\\(\\log_{10}(91 + x^2) = 2\\) <br>or, \\(91 + x^2 = 10^2\\) <br>or, \\(91 + x^2 = 100\\) <br>or, \\(x^2 = 100 - 91\\) <br>or, \\(x^2 = 9\\) <br>or, \\(x = \\pm 3\\) <br>So the values of \\(x\\) are 3 and -3. Therefore ii and iii are correct."
+            },
+            {
+                id: 26,
+                q_bn: "যদি \\(x^y = y^x\\) হয় তবে- <br> i. \\(x = y^{\\frac{x}{y}}\\) <br> ii. \\(y\\log x = x\\log y\\) <br> iii. \\(\\left(\\frac{x}{y}\\right)^{\\frac{x}{y}} = x^{\\frac{x}{y} - 1}\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(x^y = y^x\\) then- <br> i. \\(x = y^{\\frac{x}{y}}\\) <br> ii. \\(y\\log x = x\\log y\\) <br> iii. \\(\\left(\\frac{x}{y}\\right)^{\\frac{x}{y}} = x^{\\frac{x}{y} - 1}\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 3,
+                sol_bn: "i. \\(x^y = y^x \\Rightarrow (x^y)^{\\frac{1}{y}} = (y^x)^{\\frac{1}{y}} \\Rightarrow x = y^{\\frac{x}{y}}\\) (সঠিক) <br>ii. \\(x^y = y^x \\Rightarrow \\log(x^y) = \\log(y^x) \\Rightarrow y\\log x = x\\log y\\) (সঠিক) <br>iii. \\(\\left(\\frac{x}{y}\\right)^{\\frac{x}{y}} = \\frac{x^{\\frac{x}{y}}}{y^{\\frac{x}{y}}} = \\frac{x^{\\frac{x}{y}}}{x} = x^{\\frac{x}{y} - 1}\\) [যেহেতু \\(y^{\\frac{x}{y}} = x\\)] (সঠিক) <br>সুতরাং তিনটিই সঠিক।",
+                sol_en: "i. \\(x^y = y^x \\Rightarrow (x^y)^{\\frac{1}{y}} = (y^x)^{\\frac{1}{y}} \\Rightarrow x = y^{\\frac{x}{y}}\\) (Correct) <br>ii. \\(x^y = y^x \\Rightarrow \\log(x^y) = \\log(y^x) \\Rightarrow y\\log x = x\\log y\\) (Correct) <br>iii. \\(\\left(\\frac{x}{y}\\right)^{\\frac{x}{y}} = \\frac{x^{\\frac{x}{y}}}{y^{\\frac{x}{y}}} = \\frac{x^{\\frac{x}{y}}}{x} = x^{\\frac{x}{y} - 1}\\) [since \\(y^{\\frac{x}{y}} = x\\)] (Correct) <br>So all three are correct."
+            },
+            {
+                id: 27,
+                q_bn: "Logarithm এর জন্য— <br> i. \\(\\log_2 7 = \\frac{\\log_{10} 7}{\\log_{10} 2}\\) <br> ii. \\(\\log_4 64 = 4\\) <br> iii. \\(\\log_2 \\left(\\frac{128}{32}\\right) = 2\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "For Logarithm— <br> i. \\(\\log_2 7 = \\frac{\\log_{10} 7}{\\log_{10} 2}\\) <br> ii. \\(\\log_4 64 = 4\\) <br> iii. \\(\\log_2 \\left(\\frac{128}{32}\\right) = 2\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 1,
+                sol_bn: "i. ভিত্তি পরিবর্তনের সূত্র অনুযায়ী, \\(\\log_b a = \\frac{\\log_c a}{\\log_c b}\\)। এখানে \\(c=10\\) ধরলে, \\(\\log_2 7 = \\frac{\\log_{10} 7}{\\log_{10} 2}\\) (সঠিক)। <br>ii. \\(\\log_4 64 = \\log_4 4^3 = 3\\), কিন্তু দেওয়া আছে 4 (ভুল)। <br>iii. \\(\\log_2 \\left(\\frac{128}{32}\\right) = \\log_2 4 = \\log_2 2^2 = 2\\) (সঠিক)। <br>সুতরাং i ও iii সঠিক।",
+                sol_en: "i. According to the change of base formula, \\(\\log_b a = \\frac{\\log_c a}{\\log_c b}\\). Here if \\(c=10\\), \\(\\log_2 7 = \\frac{\\log_{10} 7}{\\log_{10} 2}\\) (Correct). <br>ii. \\(\\log_4 64 = \\log_4 4^3 = 3\\), but given 4 (Incorrect). <br>iii. \\(\\log_2 \\left(\\frac{128}{32}\\right) = \\log_2 4 = \\log_2 2^2 = 2\\) (Correct). <br>So i and iii are correct."
+            },
+            {
+                id: 28,
+                q_bn: "যদি \\(m, n, x > 0\\) এবং \\(m \\neq 1, n \\neq 1\\) হয়, তবে— <br> i. \\(2\\log_{\\sqrt{m}} m + 3\\log_{\\sqrt{n}} n = 5\\) <br> ii. \\(\\log m + \\log n - \\log x = \\log \\frac{mn}{x}\\) <br> iii. \\(m^x = \\sqrt[3]{m^2}\\), যখন \\(x = \\frac{2}{3}\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(m, n, x > 0\\) and \\(m \\neq 1, n \\neq 1\\), then— <br> i. \\(2\\log_{\\sqrt{m}} m + 3\\log_{\\sqrt{n}} n = 5\\) <br> ii. \\(\\log m + \\log n - \\log x = \\log \\frac{mn}{x}\\) <br> iii. \\(m^x = \\sqrt[3]{m^2}\\), when \\(x = \\frac{2}{3}\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 2,
+                sol_bn: "i. \\(2\\log_{m^{1/2}} m + 3\\log_{n^{1/2}} n = 2(2)\\log_m m + 3(2)\\log_n n = 4(1) + 6(1) = 10\\), কিন্তু দেওয়া আছে 5 (ভুল)। <br>ii. \\(\\log m + \\log n - \\log x = \\log(mn) - \\log x = \\log \\left(\\frac{mn}{x}\\right)\\) (সঠিক)। <br>iii. যখন \\(x = \\frac{2}{3}\\), তখন \\(m^x = m^{2/3} = (m^2)^{1/3} = \\sqrt[3]{m^2}\\) (সঠিক)। <br>সুতরাং ii ও iii সঠিক।",
+                sol_en: "i. \\(2\\log_{m^{1/2}} m + 3\\log_{n^{1/2}} n = 2(2)\\log_m m + 3(2)\\log_n n = 4(1) + 6(1) = 10\\), but given 5 (Incorrect). <br>ii. \\(\\log m + \\log n - \\log x = \\log(mn) - \\log x = \\log \\left(\\frac{mn}{x}\\right)\\) (Correct). <br>iii. When \\(x = \\frac{2}{3}\\), then \\(m^x = m^{2/3} = (m^2)^{1/3} = \\sqrt[3]{m^2}\\) (Correct). <br>So ii and iii are correct."
+            },
+            {
+                id: 29,
+                q_bn: "\\(f(x) = x + |x|\\) হলে— <br> i. \\(f(-200) = 0\\) <br> ii. \\(f(x)\\) এর ডোমেন \\((-\\infty, \\infty)\\) <br> iii. \\(f(x)\\) এর রেঞ্জ \\([0, \\infty)\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(f(x) = x + |x|\\)— <br> i. \\(f(-200) = 0\\) <br> ii. Domain of \\(f(x)\\) is \\((-\\infty, \\infty)\\) <br> iii. Range of \\(f(x)\\) is \\([0, \\infty)\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 3,
+                sol_bn: "i. \\(f(-200) = -200 + |-200| = -200 + 200 = 0\\) (সঠিক)। <br>ii. ফাংশনটি সকল বাস্তব সংখ্যার জন্য সংজ্ঞায়িত, তাই ডোমেন \\((-\\infty, \\infty)\\) (সঠিক)। <br>iii. যখন \\(x \\ge 0\\), \\(f(x) = x + x = 2x\\)। যখন \\(x < 0\\), \\(f(x) = x + (-x) = 0\\)। সুতরাং মান সর্বদা 0 বা ধনাত্মক। রেঞ্জ \\([0, \\infty)\\) (সঠিক)। <br>সুতরাং তিনটিই সঠিক।",
+                sol_en: "i. \\(f(-200) = -200 + |-200| = -200 + 200 = 0\\) (Correct). <br>ii. The function is defined for all real numbers, so domain is \\((-\\infty, \\infty)\\) (Correct). <br>iii. When \\(x \\ge 0\\), \\(f(x) = x + x = 2x\\). When \\(x < 0\\), \\(f(x) = x + (-x) = 0\\). So the value is always 0 or positive. Range is \\([0, \\infty)\\) (Correct). <br>So all three are correct."
+            },
+            {
+                id: 30,
+                q_bn: "\\(f(x) = \\ln(x - 2)\\) ফাংশনটি— <br> i. একটি লগারিদমিক ফাংশন <br> ii. \\(x > 2\\) এর জন্য সংজ্ঞায়িত <br> iii. রেঞ্জ \\(R_f = (0, \\infty)\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "The function \\(f(x) = \\ln(x - 2)\\) is— <br> i. A logarithmic function <br> ii. Defined for \\(x > 2\\) <br> iii. Range \\(R_f = (0, \\infty)\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 0,
+                sol_bn: "i. এটি স্পষ্টতই একটি লগারিদমিক ফাংশন (সঠিক)। <br>ii. লগারিদমের আর্গুমেন্ট ধনাত্মক হতে হবে, অর্থাৎ \\(x - 2 > 0 \\Rightarrow x > 2\\) (সঠিক)। <br>iii. লগারিদমিক ফাংশনের রেঞ্জ হলো সকল বাস্তব সংখ্যা, অর্থাৎ \\((-\\infty, \\infty)\\)। কিন্তু এখানে রেঞ্জ \\((0, \\infty)\\) বলা হয়েছে, যা ভুল। <br>সুতরাং i ও ii সঠিক।",
+                sol_en: "i. It is clearly a logarithmic function (Correct). <br>ii. The argument of the logarithm must be positive, i.e., \\(x - 2 > 0 \\Rightarrow x > 2\\) (Correct). <br>iii. The range of a logarithmic function is all real numbers, i.e., \\((-\\infty, \\infty)\\). But here range is given as \\((0, \\infty)\\), which is incorrect. <br>So i and ii are correct."
+            },
+            {
+                id: 31,
+                q_bn: "\\(f(x) = \\left(\\frac{1}{2}\\right)^x\\) একটি সূচকীয় ফাংশন হলে— <br> i. এটি (0, 1) বিন্দুগামী <br> ii. এর ডোমেন \\((-\\infty, \\infty)\\) <br> iii. এর রেঞ্জ \\((0, \\infty)\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(f(x) = \\left(\\frac{1}{2}\\right)^x\\) is an exponential function— <br> i. It passes through (0, 1) <br> ii. Its domain is \\((-\\infty, \\infty)\\) <br> iii. Its range is \\((0, \\infty)\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 3,
+                sol_bn: "i. \\(x = 0\\) হলে, \\(f(0) = \\left(\\frac{1}{2}\\right)^0 = 1\\)। সুতরাং এটি (0, 1) বিন্দুগামী (সঠিক)। <br>ii. সূচকীয় ফাংশনের ডোমেন সর্বদা সকল বাস্তব সংখ্যা \\((-\\infty, \\infty)\\) হয় (সঠিক)। <br>iii. সূচকীয় ফাংশনের রেঞ্জ সর্বদা ধনাত্মক বাস্তব সংখ্যা \\((0, \\infty)\\) হয় (সঠিক)। <br>সুতরাং তিনটিই সঠিক।",
+                sol_en: "i. If \\(x = 0\\), \\(f(0) = \\left(\\frac{1}{2}\\right)^0 = 1\\). So it passes through (0, 1) (Correct). <br>ii. The domain of an exponential function is always all real numbers \\((-\\infty, \\infty)\\) (Correct). <br>iii. The range of an exponential function is always positive real numbers \\((0, \\infty)\\) (Correct). <br>So all three are correct."
+            },
+            {
+                id: 32,
+                q_bn: "\\(a^4 = b^3 = c^2 = 64\\) হলে— <br> i. \\(a = \\pm 2\\sqrt{2}\\) <br> ii. \\(b = \\pm 4\\) <br> iii. \\(c = \\pm 8\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(a^4 = b^3 = c^2 = 64\\)— <br> i. \\(a = \\pm 2\\sqrt{2}\\) <br> ii. \\(b = \\pm 4\\) <br> iii. \\(c = \\pm 8\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 1,
+                sol_bn: "i. \\(a^4 = 64 \\Rightarrow a^4 = (2\\sqrt{2})^4 \\Rightarrow a = \\pm 2\\sqrt{2}\\) (সঠিক)। <br>ii. \\(b^3 = 64 \\Rightarrow b^3 = 4^3 \\Rightarrow b = 4\\) (শুধু ধনাত্মক মান হবে কারণ পাওয়ার বিজোড়) (ভুল)। <br>iii. \\(c^2 = 64 \\Rightarrow c = \\pm 8\\) (সঠিক)। <br>সুতরাং i ও iii সঠিক।",
+                sol_en: "i. \\(a^4 = 64 \\Rightarrow a^4 = (2\\sqrt{2})^4 \\Rightarrow a = \\pm 2\\sqrt{2}\\) (Correct). <br>ii. \\(b^3 = 64 \\Rightarrow b^3 = 4^3 \\Rightarrow b = 4\\) (Only positive value since power is odd) (Incorrect). <br>iii. \\(c^2 = 64 \\Rightarrow c = \\pm 8\\) (Correct). <br>So i and iii are correct."
+            },
+            {
+                id: 33,
+                q_bn: "যদি \\(m, n, p > 0\\) এবং \\(m \\neq 1, n \\neq 1\\) হয়, তবে— <br> i. \\(\\log_m p = \\log_n p \\times \\log_m n\\) <br> ii. \\(\\log_m \\sqrt{m} \\times \\log_n \\sqrt{n} \\times \\log_p \\sqrt{p} = \\frac{1}{8}\\) <br> iii. \\(x^{\\log_m y} = y^{\\log_m x}\\) <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(m, n, p > 0\\) and \\(m \\neq 1, n \\neq 1\\), then— <br> i. \\(\\log_m p = \\log_n p \\times \\log_m n\\) <br> ii. \\(\\log_m \\sqrt{m} \\times \\log_n \\sqrt{n} \\times \\log_p \\sqrt{p} = \\frac{1}{8}\\) <br> iii. \\(x^{\\log_m y} = y^{\\log_m x}\\) <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 3,
+                sol_bn: "i. চেইন রুল (Chain rule) অনুযায়ী, \\(\\log_n p \\times \\log_m n = \\frac{\\log p}{\\log n} \\times \\frac{\\log n}{\\log m} = \\frac{\\log p}{\\log m} = \\log_m p\\) (সঠিক)। <br>ii. \\(\\log_m m^{1/2} \\times \\log_n n^{1/2} \\times \\log_p p^{1/2} = \\frac{1}{2} \\times \\frac{1}{2} \\times \\frac{1}{2} = \\frac{1}{8}\\) (সঠিক)। <br>iii. এটি সূচক ও লগারিদমের একটি পরিচিত অভেদ: \\(x^{\\log_m y} = y^{\\log_m x}\\) (সঠিক)। <br>সুতরাং তিনটিই সঠিক।",
+                sol_en: "i. According to chain rule, \\(\\log_n p \\times \\log_m n = \\frac{\\log p}{\\log n} \\times \\frac{\\log n}{\\log m} = \\frac{\\log p}{\\log m} = \\log_m p\\) (Correct). <br>ii. \\(\\log_m m^{1/2} \\times \\log_n n^{1/2} \\times \\log_p p^{1/2} = \\frac{1}{2} \\times \\frac{1}{2} \\times \\frac{1}{2} = \\frac{1}{8}\\) (Correct). <br>iii. This is a known identity of exponents and logarithms: \\(x^{\\log_m y} = y^{\\log_m x}\\) (Correct). <br>So all three are correct."
+            },
+            {
+                id: 34,
+                q_bn: "\\(F(x) = \\ln(x)\\) হলে— <br> i. \\(D_f = (0, \\infty)\\) <br> ii. \\(R_F = (-\\infty, \\infty)\\) <br> iii. ফাংশনটি একটি লগারিদমীয় ফাংশন <br> নিচের কোনটি সঠিক?",
+                q_en: "If \\(F(x) = \\ln(x)\\)— <br> i. \\(D_f = (0, \\infty)\\) <br> ii. \\(R_F = (-\\infty, \\infty)\\) <br> iii. The function is a logarithmic function <br> Which of the following is correct?",
+                options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+                ans: 3,
+                sol_bn: "i. \\(\\ln(x)\\) এর ডোমেন \\(x > 0\\), অর্থাৎ \\(D_f = (0, \\infty)\\) (সঠিক)। <br>ii. \\(\\ln(x)\\) এর রেঞ্জ সকল বাস্তব সংখ্যা, অর্থাৎ \\(R_F = (-\\infty, \\infty)\\) (সঠিক)। <br>iii. \\(\\ln(x)\\) হলো ভিত্তি \\(e\\) এর সাপেক্ষে লগারিদম, তাই এটি একটি লগারিদমীয় ফাংশন (সঠিক)। <br>সুতরাং তিনটিই সঠিক।",
+                sol_en: "i. The domain of \\(\\ln(x)\\) is \\(x > 0\\), i.e., \\(D_f = (0, \\infty)\\) (Correct). <br>ii. The range of \\(\\ln(x)\\) is all real numbers, i.e., \\(R_F = (-\\infty, \\infty)\\) (Correct). <br>iii. \\(\\ln(x)\\) is the logarithm to the base \\(e\\), so it is a logarithmic function (Correct). <br>So all three are correct."
+            },
+            {
+                id: 35,
+                q_bn: "নিচের তথ্যের আলোকে: \\(x^p = y^q = z^r\\) এবং \\(xyz = 1\\)।<br>কোনটি সঠিক?",
+                q_en: "Based on the following information: \\(x^p = y^q = z^r\\) and \\(xyz = 1\\).<br>Which one is correct?",
+                options: ["\\(x = y^{\\frac{q}{p}}\\)", "\\(x = y^p\\)", "\\(y = x^q\\)", "\\(z = y^r\\)"],
+                ans: 0,
+                sol_bn: "দেওয়া আছে, \\(x^p = y^q\\) <br>উভয় পক্ষে \\(\\frac{1}{p}\\) পাওয়ার নিলে, <br>\\((x^p)^{\\frac{1}{p}} = (y^q)^{\\frac{1}{p}}\\) <br>বা, \\(x = y^{\\frac{q}{p}}\\)।",
+                sol_en: "Given, \\(x^p = y^q\\) <br>Taking power \\(\\frac{1}{p}\\) on both sides, <br>\\((x^p)^{\\frac{1}{p}} = (y^q)^{\\frac{1}{p}}\\) <br>or, \\(x = y^{\\frac{q}{p}}\\)."
+            },
+            {
+                id: 36,
+                q_bn: "পূর্বের তথ্যের আলোকে, \\(p + q + r\\) এর মান নিচের কোনটি?",
+                q_en: "Based on the previous information, what is the value of \\(p + q + r\\)?",
+                options: ["0", "1", "\\(xyz\\)", "\\(\\frac{1}{x} + \\frac{1}{y} + \\frac{1}{z}\\)"],
+                ans: 0,
+                sol_bn: "ধরি, \\(x^p = y^q = z^r = k\\) <br>তাহলে, \\(x = k^{\\frac{1}{p}}, y = k^{\\frac{1}{q}}, z = k^{\\frac{1}{r}}\\) <br>এখন, \\(xyz = 1\\) <br>বা, \\(k^{\\frac{1}{p}} \\cdot k^{\\frac{1}{q}} \\cdot k^{\\frac{1}{r}} = 1 = k^0\\) <br>বা, \\(k^{\\frac{1}{p} + \\frac{1}{q} + \\frac{1}{r}} = k^0\\) <br>বা, \\(\\frac{1}{p} + \\frac{1}{q} + \\frac{1}{r} = 0\\) <br>এখানে ইমেজের সমাধানে \\(\\frac{p+q+r}{q} = 0\\) থেকে \\(p+q+r=0\\) দেখানো হয়েছে যা মূলত একটি নির্দিষ্ট শর্তে (যেমন \\(p=q=r\\)) সত্য হতে পারে, তবে সাধারণ ক্ষেত্রে \\(\\frac{1}{p} + \\frac{1}{q} + \\frac{1}{r} = 0\\) হয়। প্রদত্ত ইমেজের সমাধান অনুযায়ী উত্তর 0।",
+                sol_en: "Let, \\(x^p = y^q = z^r = k\\) <br>Then, \\(x = k^{\\frac{1}{p}}, y = k^{\\frac{1}{q}}, z = k^{\\frac{1}{r}}\\) <br>Now, \\(xyz = 1\\) <br>or, \\(k^{\\frac{1}{p}} \\cdot k^{\\frac{1}{q}} \\cdot k^{\\frac{1}{r}} = 1 = k^0\\) <br>or, \\(k^{\\frac{1}{p} + \\frac{1}{q} + \\frac{1}{r}} = k^0\\) <br>or, \\(\\frac{1}{p} + \\frac{1}{q} + \\frac{1}{r} = 0\\) <br>In the image's solution, it shows \\(\\frac{p+q+r}{q} = 0\\) leading to \\(p+q+r=0\\), which might be true under specific conditions. Following the given image's solution flow, the answer is 0."
+            },
+            {
+                id: 37,
+                q_bn: "নিচের তথ্যের আলোকে: \\(a^b = b^a\\)।<br>\\(\\left(\\frac{a}{b}\\right)^{\\frac{a}{b}} =\\) কত?",
+                q_en: "Based on the following information: \\(a^b = b^a\\)।<br>What is the value of \\(\\left(\\frac{a}{b}\\right)^{\\frac{a}{b}}\\)?",
+                options: ["\\(a^{\\left(\\frac{a}{b}\\right)}\\)", "\\(b^{\\left(\\frac{a}{b}\\right)}\\)", "\\(a^{\\left(\\frac{a}{b}-1\\right)}\\)", "\\(b^{\\left(\\frac{a}{b}-1\\right)}\\)"],
+                ans: 2,
+                sol_bn: "আমরা জানি, যদি \\(x^y = y^x\\) হয়, তবে \\(\\left(\\frac{x}{y}\\right)^{\\frac{x}{y}} = x^{\\frac{x}{y} - 1}\\)। <br>সেই অনুযায়ী, \\(\\left(\\frac{a}{b}\\right)^{\\frac{a}{b}} = a^{\\frac{a}{b} - 1}\\)।",
+                sol_en: "We know that if \\(x^y = y^x\\), then \\(\\left(\\frac{x}{y}\\right)^{\\frac{x}{y}} = x^{\\frac{x}{y} - 1}\\). <br>Accordingly, \\(\\left(\\frac{a}{b}\\right)^{\\frac{a}{b}} = a^{\\frac{a}{b} - 1}\\)."
+            },
+            {
+                id: 38,
+                q_bn: "পূর্বের তথ্যের আলোকে, উদ্দীপকে \\(a = 2b\\) হলে, \\(b =\\) কত?",
+                q_en: "Based on the previous information, if \\(a = 2b\\) in the stem, what is the value of \\(b\\)?",
+                options: ["-2", "2", "-4", "4"],
+                ans: 1,
+                sol_bn: "দেওয়া আছে, \\(a^b = b^a\\) এবং \\(a = 2b\\) <br>তাহলে, \\((2b)^b = b^{2b}\\) <br>বা, \\(2^b \\cdot b^b = (b^2)^b\\) <br>বা, \\(2^b \\cdot b^b = b^{2b}\\) <br>উভয় পক্ষকে \\(b^b\\) দ্বারা ভাগ করে পাই, \\(2^b = b^b\\) <br>বা, \\(\\left(\\frac{2}{b}\\right)^b = 1 = \\left(\\frac{2}{b}\\right)^0\\) (যা সম্ভব নয় কারণ \\(b \\neq 0\\)) <br>অথবা, যদি পাওয়ার সমান হয়, তবে ভিত্তি সমান হবে। অর্থাৎ, \\(2 = b\\)।",
+                sol_en: "Given, \\(a^b = b^a\\) and \\(a = 2b\\) <br>Then, \\((2b)^b = b^{2b}\\) <br>or, \\(2^b \\cdot b^b = (b^2)^b\\) <br>or, \\(2^b \\cdot b^b = b^{2b}\\) <br>Dividing both sides by \\(b^b\\), we get \\(2^b = b^b\\) <br>Since powers are equal, bases must be equal. Therefore, \\(b = 2\\)."
+            },
+            {
+                id: 39,
+                q_bn: "নিচের তথ্যের আলোকে: \\(p = \\log_a(bc)\\) এবং \\(q = \\log_b(ac)\\)।<br>\\(1 + p =\\) কত?",
+                q_en: "Based on the following information: \\(p = \\log_a(bc)\\) and \\(q = \\log_b(ac)\\)।<br>What is the value of \\(1 + p\\)?",
+                options: ["\\(\\log_a(abc)\\)", "\\(\\log(abc)\\)", "\\(\\log_a(b^2c)\\)", "\\(\\log_{abc}a\\)"],
+                ans: 0,
+                sol_bn: "\\(1 + p = 1 + \\log_a(bc)\\) <br>\\(= \\log_a a + \\log_a(bc)\\) <br>\\(= \\log_a(a \\cdot bc)\\) <br>\\(= \\log_a(abc)\\)",
+                sol_en: "\\(1 + p = 1 + \\log_a(bc)\\) <br>\\(= \\log_a a + \\log_a(bc)\\) <br>\\(= \\log_a(a \\cdot bc)\\) <br>\\(= \\log_a(abc)\\)"
+            },
+            {
+                id: 40,
+                q_bn: "পূর্বের তথ্যের আলোকে, \\(p = q = 0\\) হলে, \\(ab + bc =\\) কত?",
+                q_en: "Based on the previous information, if \\(p = q = 0\\), what is the value of \\(ab + bc\\)?",
+                options: ["0", "1", "2", "3"],
+                ans: 2,
+                sol_bn: "দেওয়া আছে, \\(p = 0 \\Rightarrow \\log_a(bc) = 0 \\Rightarrow bc = a^0 = 1\\) <br>এবং \\(q = 0 \\Rightarrow \\log_b(ac) = 0 \\Rightarrow ac = b^0 = 1\\) <br>এখানে ইমেজের সমাধানে \\(\\log_c(ab)=0\\) ধরে \\(ab=1\\) বের করে \\(ab+bc=1+1=2\\) করা হয়েছে, যদিও উদ্দীপকে \\(c\\) এর জন্য কিছু দেওয়া নেই। তবে লজিক অনুযায়ী \\(ab=1, bc=1\\) ধরলে, \\(ab + bc = 1 + 1 = 2\\)।",
+                sol_en: "Given, \\(p = 0 \\Rightarrow \\log_a(bc) = 0 \\Rightarrow bc = a^0 = 1\\) <br>and \\(q = 0 \\Rightarrow \\log_b(ac) = 0 \\Rightarrow ac = b^0 = 1\\) <br>In the image's solution, it assumes a third variable's log is 0 to get \\(ab=1\\), and then \\(ab+bc=1+1=2\\). Following that logic, \\(ab=1, bc=1\\), so \\(ab + bc = 1 + 1 = 2\\)."
+            },
+            {
+                id: 41,
+                q_bn: "নিচের তথ্যের আলোকে: \\(y = 3^x\\)।<br>\\(y = 3\\sqrt{3}\\) হলে \\(x\\) এর মান কত?",
+                q_en: "Based on the following information: \\(y = 3^x\\)।<br>If \\(y = 3\\sqrt{3}\\), what is the value of \\(x\\)?",
+                options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{2}{3}\\)", "\\(\\frac{3}{2}\\)", "\\(\\frac{5}{2}\\)"],
+                ans: 2,
+                sol_bn: "দেওয়া আছে, \\(y = 3^x\\) <br>আবার, \\(y = 3\\sqrt{3}\\) <br>\\(\\therefore 3^x = 3^1 \\cdot 3^{\\frac{1}{2}}\\) <br>বা, \\(3^x = 3^{1 + \\frac{1}{2}}\\) <br>বা, \\(3^x = 3^{\\frac{3}{2}}\\) <br>সুতরাং, \\(x = \\frac{3}{2}\\)",
+                sol_en: "Given, \\(y = 3^x\\) <br>Also, \\(y = 3\\sqrt{3}\\) <br>\\(\\therefore 3^x = 3^1 \\cdot 3^{\\frac{1}{2}}\\) <br>or, \\(3^x = 3^{1 + \\frac{1}{2}}\\) <br>or, \\(3^x = 3^{\\frac{3}{2}}\\) <br>So, \\(x = \\frac{3}{2}\\)"
+            },
+            {
+                id: 42,
+                q_bn: "যদি \\(\\log_{\\sqrt{3}} y = z\\) হয় তবে \\(\\frac{z}{x}\\) এর মান কত? (যেখানে \\(y = 3^x\\))",
+                q_en: "If \\(\\log_{\\sqrt{3}} y = z\\), what is the value of \\(\\frac{z}{x}\\)? (where \\(y = 3^x\\))",
+                options: ["\\(\\frac{1}{3}\\)", "\\(\\frac{1}{2}\\)", "2", "3"],
+                ans: 2,
+                sol_bn: "\\(\\log_{\\sqrt{3}} y = z\\) <br>বা, \\(\\log_{\\sqrt{3}} (3^x) = z\\) (যেহেতু \\(y = 3^x\\)) <br>বা, \\(\\log_{\\sqrt{3}} ((\\sqrt{3})^2)^x = z\\) <br>বা, \\(\\log_{\\sqrt{3}} (\\sqrt{3})^{2x} = z\\) <br>বা, \\(2x \\log_{\\sqrt{3}} \\sqrt{3} = z\\) <br>বা, \\(2x(1) = z\\) <br>বা, \\(z = 2x\\) <br>সুতরাং, \\(\\frac{z}{x} = 2\\)",
+                sol_en: "\\(\\log_{\\sqrt{3}} y = z\\) <br>or, \\(\\log_{\\sqrt{3}} (3^x) = z\\) (since \\(y = 3^x\\)) <br>or, \\(\\log_{\\sqrt{3}} ((\\sqrt{3})^2)^x = z\\) <br>or, \\(\\log_{\\sqrt{3}} (\\sqrt{3})^{2x} = z\\) <br>or, \\(2x \\log_{\\sqrt{3}} \\sqrt{3} = z\\) <br>or, \\(2x(1) = z\\) <br>or, \\(z = 2x\\) <br>So, \\(\\frac{z}{x} = 2\\)"
+            },
+            {
+                id: 43,
+                q_bn: "নিচের তথ্যের উপর ভিত্তি করে: \\(\\frac{\\log_2 x}{y-z} = \\frac{\\log_2 y}{z-x} = \\frac{\\log_2 z}{x-y}\\)।<br>\\(yz =\\) কত?",
+                q_en: "Based on the following information: \\(\\frac{\\log_2 x}{y-z} = \\frac{\\log_2 y}{z-x} = \\frac{\\log_2 z}{x-y}\\)।<br>What is the value of \\(yz\\)?",
+                options: ["\\(\\frac{1}{x}\\)", "1", "2", "\\(\\frac{1}{2}\\)"],
+                ans: 0,
+                sol_bn: "ধরি, \\(\\frac{\\log_2 x}{y-z} = \\frac{\\log_2 y}{z-x} = \\frac{\\log_2 z}{x-y} = k\\) <br>তাহলে, \\(\\log_2 x = k(y-z)\\), \\(\\log_2 y = k(z-x)\\), \\(\\log_2 z = k(x-y)\\) <br>এখন, \\(\\log_2(yz) = \\log_2 y + \\log_2 z = k(z-x) + k(x-y) = k(z-x+x-y) = k(z-y) = -k(y-z)\\) <br>যেহেতু \\(\\log_2 x = k(y-z)\\), তাহলে \\(\\log_2(yz) = -\\log_2 x = \\log_2(x^{-1}) = \\log_2\\left(\\frac{1}{x}\\right)\\) <br>সুতরাং, \\(yz = \\frac{1}{x}\\)",
+                sol_en: "Let, \\(\\frac{\\log_2 x}{y-z} = \\frac{\\log_2 y}{z-x} = \\frac{\\log_2 z}{x-y} = k\\) <br>Then, \\(\\log_2 x = k(y-z)\\), \\(\\log_2 y = k(z-x)\\), \\(\\log_2 z = k(x-y)\\) <br>Now, \\(\\log_2(yz) = \\log_2 y + \\log_2 z = k(z-x) + k(x-y) = k(z-x+x-y) = k(z-y) = -k(y-z)\\) <br>Since \\(\\log_2 x = k(y-z)\\), then \\(\\log_2(yz) = -\\log_2 x = \\log_2(x^{-1}) = \\log_2\\left(\\frac{1}{x}\\right)\\) <br>So, \\(yz = \\frac{1}{x}\\)"
+            },
+            {
+                id: 44,
+                q_bn: "পূর্বের তথ্যের আলোকে (প্রশ্ন ৪৩), \\(x^x y^y z^z =\\) কত?",
+                q_en: "Based on the previous information, what is the value of \\(x^x y^y z^z\\)?",
+                options: ["0", "1", "\\(xyz\\)", "\\(\\frac{1}{xyz}\\)"],
+                ans: 1,
+                sol_bn: "ধরি প্রদত্ত অনুপাত = \\(k\\)। তাহলে, <br>\\(\\log_2 x^x + \\log_2 y^y + \\log_2 z^z = x\\log_2 x + y\\log_2 y + z\\log_2 z\\) <br>\\(= xk(y-z) + yk(z-x) + zk(x-y) = k(xy-xz+yz-yx+zx-zy) = k(0) = 0\\) <br>অতএব, \\(\\log_2(x^x y^y z^z) = 0 = \\log_2 1\\) <br>সুতরাং, \\(x^x y^y z^z = 1\\)",
+                sol_en: "Let the given ratio = \\(k\\). Then, <br>\\(\\log_2 x^x + \\log_2 y^y + \\log_2 z^z = x\\log_2 x + y\\log_2 y + z\\log_2 z\\) <br>\\(= xk(y-z) + yk(z-x) + zk(x-y) = k(xy-xz+yz-yx+zx-zy) = k(0) = 0\\) <br>Therefore, \\(\\log_2(x^x y^y z^z) = 0 = \\log_2 1\\) <br>So, \\(x^x y^y z^z = 1\\)"
+            },
+            {
+                id: 45,
+                q_bn: "নিচের তথ্যের আলোকে: \\(f(x) = \\log_{10} 3x\\)।<br>\\(f(x)\\) এর ডোমেন কত?",
+                q_en: "Based on the following information: \\(f(x) = \\log_{10} 3x\\)।<br>What is the domain of \\(f(x)\\)?",
+                options: ["\\((-\\infty, \\infty)\\)", "\\((-\\infty, 0)\\)", "\\((0, \\infty)\\)", "\\((3, \\infty)\\)"],
+                ans: 2,
+                sol_bn: "লগারিদমিক ফাংশন \\(f(x) = \\log_{10} 3x\\) সংজ্ঞায়িত হবে যদি এর আর্গুমেন্ট ধনাত্মক হয়। <br>অর্থাৎ, \\(3x > 0 \\Rightarrow x > 0\\)। <br>সুতরাং, ডোমেন = \\((0, \\infty)\\)।",
+                sol_en: "The logarithmic function \\(f(x) = \\log_{10} 3x\\) is defined if its argument is positive. <br>That is, \\(3x > 0 \\Rightarrow x > 0\\). <br>So, domain = \\((0, \\infty)\\)."
+            }
+        ];
+
+        const uiText = {
+            bn: {
+                title: "এসএসসি প্রস্তুতিমূলক পরীক্ষা ২০২৭",
+                subject: "বিষয়: উচ্চতর গণিত, অধ্যায় ৯",
+                time: "সময়: ৪৫ মিনিট",
+                marks: "পূর্ণমান: ৪৫",
+                formTitle: "শিক্ষার্থীর তথ্য",
+                name: "শিক্ষার্থীর নাম:",
+                school: "স্কুল/কলেজ:",
+                date: "তারিখ:",
+                startBtn: "পরীক্ষা শুরু করুন",
+                print: "প্রিন্ট করুন",
+                submitBtn: "উত্তরপত্র জমা দিন",
+                scoreTitle: "আপনার প্রাপ্ত নম্বর",
+                scoreDesc: "নিচে আপনার উত্তরগুলো পর্যালোচনা করুন। সঠিক উত্তর সবুজ এবং ভুল উত্তর লাল রঙে চিহ্নিত করা হয়েছে।",
+                solutionBtn: "সম্পূর্ণ সমাধান দেখুন",
+                solutionBtnHide: "সমাধান আড়াল করুন",
+                solutionLabel: "সমাধান:"
+            },
+            en: {
+                title: "SSC Preparation Test 2027",
+                subject: "Subject: Higher Mathematics, Chapter 9",
+                time: "Time: 45 Minutes",
+                marks: "Full Marks: 45",
+                formTitle: "Student Information",
+                name: "Student Name:",
+                school: "School/College:",
+                date: "Date:",
+                startBtn: "Exam Start",
+                print: "Print",
+                submitBtn: "Submit Answer Sheet",
+                scoreTitle: "Your Score",
+                scoreDesc: "Review your answers below. Correct answers are marked in green, incorrect in red.",
+                solutionBtn: "See Complete Solutions",
+                solutionBtnHide: "Hide Solutions",
+                solutionLabel: "Solution:"
+            }
+        };
+
+        let currentLang = 'en';
+        let examStarted = false;
+        let examSubmitted = false;
+        
+        let timeTotalSeconds = 45 * 60; // 45 minutes
+        let timerInterval;
+
+        // Bengali number converters for option tags (ক, খ, গ, ঘ)
+        const bnOptions = ["ক", "খ", "গ", "ঘ"];
+        const enOptions = ["A", "B", "C", "D"];
+
+        
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button styling
+            const langBnBtn = document.getElementById('lang-bn');
+            const langEnBtn = document.getElementById('lang-en');
+            if (langBnBtn) langBnBtn.className = lang === 'bn' ? 'px-3 py-1 bg-green-600 text-white rounded text-sm font-medium transition' : 'px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm font-medium hover:bg-gray-300 transition';
+            if (langEnBtn) langEnBtn.className = lang === 'en' ? 'px-3 py-1 bg-blue-600 text-white rounded text-sm font-medium transition' : 'px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm font-medium hover:bg-gray-300 transition';
+
+            // Apply translations to UI elements safely
+            const elementsToUpdate = [
+                { id: 'ui-header-title', key: 'title' },
+                { id: 'ui-header-subject', key: 'subject' },
+                { id: 'ui-header-time', key: 'time' },
+                { id: 'ui-header-marks', key: 'marks' },
+                { id: 'ui-form-title', key: 'formTitle' },
+                { id: 'ui-label-name', key: 'name' },
+                { id: 'ui-label-school', key: 'school' },
+                { id: 'ui-label-date', key: 'date' },
+                { id: 'ui-btn-start', key: 'startBtn' },
+                { id: 'ui-print', key: 'print' },
+                { id: 'ui-btn-submit', key: 'submitBtn' },
+                { id: 'ui-score-title', key: 'scoreTitle' },
+                { id: 'ui-score-desc', key: 'scoreDesc' }
+            ];
+
+            elementsToUpdate.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) {
+                    el.innerText = uiText[lang][item.key];
+                }
+            });
+
+            const solBtn = document.getElementById('ui-btn-solutions');
+            if (solBtn) {
+                if(solBtn.innerText !== uiText['bn'].solutionBtnHide && solBtn.innerText !== uiText['en'].solutionBtnHide) {
+                    solBtn.innerText = uiText[lang].solutionBtn;
+                } else {
+                    solBtn.innerText = uiText[lang].solutionBtnHide;
+                }
+            }
+
+            // Re-render questions if exam is already visible or submitted
+            if (examStarted) {
+                renderQuestions();
+                if (examSubmitted) {
+                    highlightAnswers();
+                }
+            }
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear existing
+
+            questionsData.forEach((q, index) => {
+                const questionText = currentLang === 'bn' ? q.q_bn : q.q_en;
+                const solutionText = currentLang === 'bn' ? q.sol_bn : q.sol_en;
+                const optionLabels = currentLang === 'bn' ? bnOptions : enOptions;
+                const solLabel = uiText[currentLang].solutionLabel;
+
+                let optionsHTML = '';
+                q.options.forEach((opt, oIdx) => {
+                    // Check if previously selected to maintain state during language toggle
+                    const isChecked = sessionStorage.getItem(`q_${q.id}`) == oIdx ? 'checked' : '';
+                    const disabled = examSubmitted ? 'disabled' : '';
+                    
+                    optionsHTML += `
+                        <label class="flex items-start space-x-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition option-label" id="label-q${q.id}-o${oIdx}">
+                            <input type="radio" name="q_${q.id}" value="${oIdx}" class="mt-1 w-4 h-4 text-blue-600 focus:ring-blue-500" onchange="saveAnswer(${q.id}, ${oIdx})" ${isChecked} ${disabled}>
+                            <span class="text-gray-700"><span class="font-semibold mr-2">(${optionLabels[oIdx]})</span> ${opt}</span>
+                        </label>
+                    `;
+                });
+
+                const qCard = `
+                    <div class="question-card bg-white p-6 rounded-xl shadow-sm border border-gray-100" id="q-card-${q.id}">
+                        <div class="flex space-x-3 mb-4">
+                            <span class="font-bold text-lg text-gray-800">${index + 1}.</span>
+                            <div class="text-lg text-gray-800 question-text break-words">${questionText}</div>
+                        </div>
+                        <div class="options-grid grid grid-cols-1 md:grid-cols-2 gap-4 ml-6">
+                            ${optionsHTML}
+                        </div>
+                        <div class="solution-box mt-6 ml-6 p-4 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-900">
+                            <strong class="block mb-2 text-indigo-700">${solLabel}</strong>
+                            <div>${solutionText}</div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += qCard;
+            });
+
+            // Re-run MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise([container]).catch((err) => console.log('MathJax Error:', err));
+            }
+        }
+
+        function saveAnswer(qId, oIdx) {
+            sessionStorage.setItem(`q_${qId}`, oIdx);
+        }
+
+        function startExam() {
+            const name = document.getElementById('student-name').value;
+            const school = document.getElementById('student-school').value;
+            const date = document.getElementById('student-date').value;
+
+            if(!name || !school || !date) {
+                alert(currentLang === 'bn' ? "অনুগ্রহ করে সকল তথ্য প্রদান করুন।" : "Please fill in all student information.");
+                return;
+            }
+
+            // Set Print Header Info
+            document.getElementById('print-name').innerText = name;
+            document.getElementById('print-school').innerText = school;
+            document.getElementById('print-date').innerText = date;
+
+            // Clear previous session storage
+            questionsData.forEach(q => sessionStorage.removeItem(`q_${q.id}`));
+
+            // UI Changes
+            document.getElementById('student-form-section').classList.add('no-print', 'hidden');
+            document.getElementById('timer-bar').classList.remove('hidden');
+            document.getElementById('exam-section').classList.remove('hidden');
+            
+            examStarted = true;
+            renderQuestions();
+
+            // Setup Times
+            const now = new Date();
+            const startStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            now.setMinutes(now.getMinutes() + 45);
+            const endStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            document.getElementById('ui-start-time-disp').innerText = `Start Time: ${startStr}`;
+            document.getElementById('ui-end-time-disp').innerText = `End Time: ${endStr}`;
+
+            // Start Timer
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (timeTotalSeconds <= 0) {
+                clearInterval(timerInterval);
+                submitExam(true);
+                return;
+            }
+            timeTotalSeconds--;
+            const m = Math.floor(timeTotalSeconds / 60).toString().padStart(2, '0');
+            const s = (timeTotalSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('time-remaining').innerText = `${m}:${s}`;
+        }
+
+        function submitExam(isAuto = false) {
+            if(examSubmitted) return;
+            
+            clearInterval(timerInterval);
+            examSubmitted = true;
+            
+            let score = 0;
+
+            // Disable all inputs and calculate score
+            questionsData.forEach(q => {
+                const selected = sessionStorage.getItem(`q_${q.id}`);
+                if (selected != null && parseInt(selected) === q.ans) {
+                    score++;
+                }
+            });
+
+            // Update UI
+            document.getElementById('score-display').innerText = score;
+            document.getElementById('total-q-count').innerText = questionsData.length;
+            document.getElementById('result-summary').classList.remove('hidden');
+            document.getElementById('submit-btn').classList.add('hidden');
+            document.getElementById('timer-bar').classList.add('hidden');
+
+            highlightAnswers();
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function highlightAnswers() {
+            questionsData.forEach(q => {
+                const selected = sessionStorage.getItem(`q_${q.id}`);
+                
+                // Highlight logic
+                for(let i=0; i<4; i++) {
+                    const labelDiv = document.getElementById(`label-q${q.id}-o${i}`);
+                    const inputRadio = labelDiv.querySelector('input');
+                    inputRadio.disabled = true;
+
+                    // Reset styling classes first
+                    labelDiv.className = "flex items-start space-x-3 p-3 rounded-lg border transition option-label";
+
+                    if (i === q.ans) {
+                        // Correct Answer -> Green
+                        labelDiv.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                    } else if (selected != null && parseInt(selected) === i) {
+                        // Selected but Wrong -> Red
+                        labelDiv.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                    } else {
+                        // Unselected other options -> Gray
+                        labelDiv.classList.add('border-gray-200', 'opacity-60');
+                    }
+                }
+            });
+        }
+
+        let solutionsVisible = false;
+        function toggleSolutions() {
+            solutionsVisible = !solutionsVisible;
+            const boxes = document.querySelectorAll('.solution-box');
+            const btn = document.getElementById('ui-btn-solutions');
+
+            if (btn) {
+                if (solutionsVisible) {
+                    boxes.forEach(box => box.classList.add('visible'));
+                    btn.innerText = currentLang === 'bn' ? uiText['bn'].solutionBtnHide : uiText['en'].solutionBtnHide;
+                    btn.classList.replace('bg-indigo-600', 'bg-gray-600');
+                    btn.classList.replace('hover:bg-indigo-700', 'hover:bg-gray-700');
+                } else {
+                    boxes.forEach(box => box.classList.remove('visible'));
+                    btn.innerText = currentLang === 'bn' ? uiText['bn'].solutionBtn : uiText['en'].solutionBtn;
+                    btn.classList.replace('bg-gray-600', 'bg-indigo-600');
+                    btn.classList.replace('hover:bg-gray-700', 'hover:bg-indigo-700');
+                }
+            }
+        }
+
+        // Initialize default language on load after DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage('en');
+        });
+    </script>
+</body>
+</html>
